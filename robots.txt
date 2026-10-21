@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://raikuro22.github.io/RaiKuro/sitemap.xml

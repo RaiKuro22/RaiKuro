@@ -3,57 +3,185 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RaiKuro · Presupuestos con seguimiento para empresas de servicios técnicos</title>
-<meta name="description" content="Registro de presupuestos, PDF desde plantilla y avisos de seguimiento para instaladores y reformistas de Alzira y la Ribera. Piloto de 7 días a precio cerrado.">
+<title>RaiKuro · Presupuestos con seguimiento y asistente virtual para instaladores y reformistas</title>
+<meta name="description" content="RaiKuro ofrece a empresas de instalaciones y reformas de Alzira y la Ribera dos servicios: seguimiento de presupuestos y un asistente virtual de recepción. Pilotos a precio cerrado.">
+<link rel="canonical" href="https://raikuro22.github.io/RaiKuro/">
 <link rel="icon" href="icon-96.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="RaiKuro · Que ninguna solicitud ni presupuesto se pierda">
+<meta property="og:description" content="Seguimiento de presupuestos y asistente virtual de recepción para empresas de instalaciones y reformas. Pilotos a precio cerrado.">
+<meta property="og:url" content="https://raikuro22.github.io/RaiKuro/">
+<meta property="og:image" content="https://raikuro22.github.io/RaiKuro/banner.png">
+<meta name="theme-color" content="#0B0B0F">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"RaiKuro","url":"https://raikuro22.github.io/RaiKuro/","email":"alexandre.raikuro@gmail.com","telephone":"+34622785244","areaServed":["Alzira","Ribera Alta","Ribera Baixa","Valencia"],"description":"Seguimiento de presupuestos y asistente virtual de recepción para empresas de instalaciones y reformas.","makesOffer":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Presupuestos con seguimiento"},"price":"290","priceCurrency":"EUR"},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Asistente virtual de recepción"},"price":"490","priceCurrency":"EUR"}]}
+</script>
 <style>
-:root{--p:#6A5DFF;--w:#F5F6FF;--b:#0B0B0F;--s:#2A2E3A;--m:#9aa0b5}
-*{box-sizing:border-box}body{margin:0;background:var(--b);color:var(--w);font:17px/1.6 system-ui,Segoe UI,Roboto,sans-serif}
-.w{max-width:860px;margin:0 auto;padding:0 20px}
-header{padding:28px 0 10px}header img{width:100%;max-width:420px;display:block}
-h1{font-size:clamp(28px,5vw,42px);line-height:1.15;margin:30px 0 14px}
-h2{font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:#a49cff;margin:44px 0 10px}
-p{color:#d6d9e8}.m{color:var(--m);font-size:14px}
-.cta{display:inline-block;background:var(--p);color:#fff;text-decoration:none;font-weight:700;padding:14px 22px;border-radius:10px;margin:8px 10px 8px 0}
-.cta.s{background:transparent;border:1px solid var(--s);color:var(--w)}
-ul{padding-left:20px;color:#d6d9e8}li{margin:6px 0}
-.box{background:#11121a;border:1px solid var(--s);border-radius:12px;padding:18px 20px;margin:10px 0}
-.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
-footer{border-top:1px solid var(--s);margin-top:50px;padding:24px 0 50px;color:var(--m);font-size:13px}
+:root{--p:#6A5DFF;--p2:#8b81ff;--w:#F5F6FF;--b:#0B0B0F;--s:#2A2E3A;--c:#11121a;--m:#9aa0b5;--t:#d6d9e8}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--b);color:var(--w);font:17px/1.65 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:var(--p2)}
+.w{max-width:980px;margin:0 auto;padding:0 20px}
+nav{position:sticky;top:0;z-index:5;background:rgba(11,11,15,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--s)}
+nav .w{display:flex;align-items:center;gap:16px;height:58px}
+nav img{height:30px;width:30px;border-radius:6px}
+nav b{letter-spacing:.14em;font-size:15px}
+nav .sp{flex:1}
+nav a.l{color:var(--t);text-decoration:none;font-size:14px;display:none}
+@media(min-width:760px){nav a.l{display:inline}}
+.btn{display:inline-block;background:var(--p);color:#fff;text-decoration:none;font-weight:700;padding:13px 22px;border-radius:10px;border:1px solid var(--p)}
+.btn:hover{background:var(--p2)}
+.btn.o{background:transparent;color:var(--w);border-color:var(--s)}
+.btn.o:hover{border-color:var(--p2)}
+.btn.sm{padding:8px 14px;font-size:14px}
+.hero{padding:56px 0 36px;background:radial-gradient(700px 300px at 70% -10%,rgba(106,93,255,.22),transparent)}
+.hero h1{font-size:clamp(30px,5.4vw,50px);line-height:1.1;margin:0 0 16px;letter-spacing:-.01em}
+.hero p{font-size:19px;color:var(--t);max-width:680px}
+.hero .row{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap}
+.tag{display:inline-block;font-size:12px;letter-spacing:.14em;color:#a49cff;border:1px solid var(--s);border-radius:99px;padding:4px 12px;margin-bottom:18px}
+section{padding:46px 0;border-top:1px solid var(--s)}
+h2{font-size:clamp(22px,3.4vw,30px);margin:0 0 8px;line-height:1.2}
+.sub{color:var(--m);margin:0 0 24px}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.card{background:var(--c);border:1px solid var(--s);border-radius:12px;padding:18px}
+.card h3{margin:0 0 6px;font-size:17px}.card p{margin:0;color:var(--t);font-size:15px}
+.svc{display:flex;flex-direction:column;gap:8px}
+.svc .k{font-size:12px;letter-spacing:.14em;color:#a49cff}
+.svc h3{font-size:22px;margin:0}
+.svc .pr{font-size:14px;color:var(--m)}.svc .pr b{color:var(--w);font-size:20px}
+.svc a{margin-top:auto;align-self:flex-start}
+.n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--p);font-weight:700;margin-bottom:10px}
+.pain li{margin:8px 0;color:var(--t)}
+.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.price .card.hl{border-color:var(--p);box-shadow:0 0 0 1px var(--p) inset}
+.price .amt{font-size:34px;font-weight:800}.price small{color:var(--m);font-size:14px}
+.price ul{padding-left:18px;color:var(--t);font-size:15px;margin:12px 0 0}
+details{background:var(--c);border:1px solid var(--s);border-radius:10px;padding:14px 18px;margin:10px 0}
+summary{cursor:pointer;font-weight:600}
+details p{color:var(--t);margin:10px 0 0;font-size:15px}
+.demo{display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:760px){.demo{grid-template-columns:1.1fr 1fr;align-items:center}}
+.demo iframe{width:100%;height:460px;border:1px solid var(--s);border-radius:12px;background:#0B0B0F}
+.chat{background:#fff;color:#111;border-radius:12px;padding:16px;font-size:15px;max-width:420px}
+.chat .h{font-weight:700;border-bottom:1px solid #e5e5ea;padding-bottom:8px;margin-bottom:10px}
+.m1,.m2{padding:8px 12px;border-radius:14px;margin:6px 0;max-width:88%}
+.m1{background:#eef0ff;color:#222}.m2{background:#6A5DFF;color:#fff;margin-left:auto}
+.chat small{color:#777}
+.contact{text-align:center}
+.contact .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+footer{border-top:1px solid var(--s);padding:26px 0 60px;color:var(--m);font-size:13px}
+footer a{color:var(--m)}
 </style>
 </head>
 <body>
-<div class="w">
-<header><img src="banner.png" alt="RaiKuro — Ideas / Business / Games"></header>
+<nav><div class="w"><img src="icon-96.png" alt=""><b>RAIKURO</b><span class="sp"></span>
+<a class="l" href="#servicios">Servicios</a><a class="l" href="#seguimiento">Seguimiento</a><a class="l" href="#asistente">Asistente</a><a class="l" href="#precio">Precios</a><a class="l" href="#faq">Preguntas</a>
+<a class="btn sm" href="#contacto">Hablemos</a></div></nav>
 
-<h1>Que ningún presupuesto se quede sin seguimiento.</h1>
-<p>Si tu empresa de instalaciones o reformas envía presupuestos por WhatsApp, email o papel y luego no sabes cuáles siguen pendientes, lo ordenamos en 7 días con una herramienta sencilla que sigue funcionando con tus hábitos de siempre.</p>
-<a class="cta" href="mailto:alexandre.raikuro@gmail.com?subject=Quiero ver la demo de presupuestos">Pedir una demo de 15 minutos</a>
-<a class="cta s" href="demo.html">Ver la demo interactiva</a>
+<header class="hero"><div class="w">
+<span class="tag">ALZIRA · RIBERA · VALENCIA</span>
+<h1>Que ningún presupuesto ni solicitud se pierda.</h1>
+<p>RaiKuro ayuda a empresas de instalaciones y reformas con dos herramientas sencillas: <b>seguimiento de presupuestos</b> y un <b>asistente virtual de recepción</b>. Se implantan en pocos días, sin cambiar tu forma de trabajar.</p>
+<div class="row"><a class="btn" href="https://wa.me/34622785244?text=Hola%20Alexandre,%20quiero%20informaci%C3%B3n%20sobre%20vuestros%20servicios">Hablar por WhatsApp</a><a class="btn o" href="#servicios">Ver los dos servicios</a></div>
+</div></header>
 
-<h2>Qué incluye</h2>
+<section id="servicios"><div class="w">
+<h2>Dos servicios, un mismo objetivo</h2><p class="sub">Puedes contratar uno o los dos. Se complementan: el asistente recoge la solicitud y el seguimiento se encarga de que el presupuesto no se enfríe.</p>
+<div class="g2">
+<div class="card svc"><span class="k">SERVICIO 1</span><h3>📋 Presupuestos con seguimiento</h3>
+<p>Registro de cada solicitud, PDF desde plantilla y avisos de lo que sigue sin respuesta a los 3 y 7 días.</p>
+<div class="pr">Piloto <b>290 €</b> · mantenimiento opcional 59 €/mes</div><a class="btn o sm" href="#seguimiento">Ver detalle</a></div>
+<div class="card svc"><span class="k">SERVICIO 2</span><h3>💬 Asistente virtual de recepción</h3>
+<p>Un chat que atiende solicitudes a cualquier hora, recoge los datos y los apunta directamente en tu libro de presupuestos.</p>
+<div class="pr">Piloto <b>490 €</b> · 99 €/mes</div><a class="btn o sm" href="#asistente">Ver detalle</a></div>
+</div>
+</div></section>
+
+<section id="problema"><div class="w">
+<h2>¿Te suena?</h2><p class="sub">Un presupuesto sin respuesta no es un “no”: muchas veces es un “se me ha olvidado”. Y una solicitud sin atender se la lleva otro.</p>
+<ul class="pain"><li>Envías el presupuesto y no vuelves a mirarlo hasta que el cliente te llama (o no).</li>
+<li>Te llegan solicitudes fuera de horario o cuando estás en obra y se enfrían.</li>
+<li>Los datos están repartidos entre WhatsApp, Excel y libretas.</li>
+<li>No sabes cuántos presupuestos tienes abiertos ni cuánto dinero hay en juego.</li></ul>
+</div></section>
+
+<section id="seguimiento"><div class="w">
+<h2>Servicio 1 · Presupuestos con seguimiento</h2><p class="sub">Una herramienta sencilla en tu propia cuenta de Google. Nada que instalar ni aprender de cero.</p>
 <div class="g">
-<div class="box"><b>Registro único</b><br>Cada solicitud de presupuesto queda anotada con su estado: solicitado, enviado, ganado o perdido.</div>
-<div class="box"><b>PDF desde plantilla</b><br>Presupuesto con su nombre y su IVA, generado en un clic.</div>
-<div class="box"><b>Avisos de seguimiento</b><br>A los 3 y a los 7 días te avisamos de lo que sigue sin respuesta, con un borrador que tú revisas y envías.</div>
-<div class="box"><b>Resumen semanal</b><br>Cada lunes, por email: cuántos presupuestos hay en cada estado y cuánto dinero está en juego.</div>
+<div class="card"><h3>📋 Registro único</h3><p>Cada solicitud queda anotada con su estado: solicitado, enviado, ganado o perdido.</p></div>
+<div class="card"><h3>📄 PDF desde plantilla</h3><p>Presupuesto con tu nombre y tu IVA, generado en un clic.</p></div>
+<div class="card"><h3>⏰ Avisos a los 3 y 7 días</h3><p>Te avisamos de lo que sigue sin respuesta, con un borrador que tú revisas y envías.</p></div>
+<div class="card"><h3>📊 Resumen semanal</h3><p>Cada lunes por email: presupuestos por estado y dinero pendiente.</p></div>
 </div>
-
-<h2>Cómo funciona</h2>
-<ul>
-<li>Llamada o reunión de 15 minutos para ver cómo presupuestas hoy.</li>
-<li>Propuesta con alcance y precio cerrado por escrito.</li>
-<li>Entrega en 7 días laborables desde que tengo tu logo y tus datos. Formación de 30 minutos incluida.</li>
-<li>Tus datos se quedan en <b>tus</b> cuentas. Nada se envía a tus clientes sin que tú lo apruebes.</li>
-</ul>
-
-<h2>Condiciones del piloto</h2>
-<div class="box">Precio cerrado de piloto para las primeras empresas de la zona. Pago 50% al aceptar y 50% a la entrega. Sin permanencia. Mantenimiento mensual opcional. No prometemos aumentar tus ventas: prometemos que cada presupuesto quede registrado y con recordatorios programados.</div>
-
-<h2>Quién soy</h2>
-<p>Soy <b>Alexandre Tro Arribas</b>, programador de Alzira. Construyo herramientas a medida para que las empresas locales pierdan menos tiempo en tareas repetitivas. <span class="m">(Sin testimonios todavía: estoy buscando mis primeras empresas de referencia en la zona.)</span></p>
-<a class="cta" href="mailto:alexandre.raikuro@gmail.com?subject=Presupuestos con seguimiento">Escríbeme</a>
-
-<footer>RaiKuro · Ideas / Business / Games · Alzira (Valencia) · alexandre.raikuro@gmail.com · Responsable: Alexandre Tro Arribas, NIF TU_NIF. Los datos que me envíes se usarán solo para responder a tu consulta.</footer>
+<p class="sub" style="margin-top:18px">Nada se envía a tus clientes sin que tú lo apruebes. Tus datos están en <b>tu</b> cuenta y puedes revocar mi acceso cuando quieras.</p>
+<div class="demo" id="demo" style="margin-top:26px">
+<div><h3 style="margin:0 0 6px">Pruébalo tú mismo</h3><p class="sub">Demo con datos ficticios: cambia un estado, abre un PDF o mira el borrador de seguimiento.</p>
+<a class="btn" href="demo.html">Abrir la demo a pantalla completa</a></div>
+<iframe src="demo.html" title="Demo de seguimiento de presupuestos" loading="lazy"></iframe>
 </div>
+</div></section>
+
+<section id="asistente"><div class="w">
+<h2>Servicio 2 · Asistente virtual de recepción</h2><p class="sub">Para que ninguna solicitud se pierda fuera de horario o mientras estás en obra.</p>
+<div class="demo">
+<div>
+<div class="g" style="grid-template-columns:1fr">
+<div class="card"><h3>💬 Chat en tu web o por enlace</h3><p>Atiende a quien pide presupuesto a cualquier hora. Se presenta siempre como asistente automático (IA).</p></div>
+<div class="card"><h3>📝 Recoge lo esencial</h3><p>Nombre, teléfono, trabajo y zona, y lo apunta en tu libro de presupuestos. Tú recibes un email por cada solicitud.</p></div>
+<div class="card"><h3>🛡️ Con límites claros</h3><p>No da precios ni plazos, avisa del 112 si hay riesgo y pasa a una persona cuando hace falta. Tú revisas las conversaciones.</p></div>
+</div></div>
+<div class="chat" aria-label="Ejemplo de conversación">
+<div class="h">Asistente virtual · Instalaciones Demo</div>
+<div class="m1">Hola, soy el asistente virtual (IA) de la empresa. ¿Qué trabajo necesitas?</div>
+<div class="m2">Quiero cambiar el cuadro eléctrico de mi casa</div>
+<div class="m1">Perfecto. ¿Me dices tu nombre y un teléfono de contacto?</div>
+<div class="m2">Ana, 600 11 22 33. En Alzira</div>
+<div class="m1">Gracias, Ana. Cambio de cuadro eléctrico en Alzira, teléfono 600 11 22 33. ¿Lo confirmo?</div>
+<small>Ejemplo ilustrativo. Demo en directo bajo petición.</small>
+</div>
+</div>
+<p class="sub" style="margin-top:18px">Se prueba contigo en 10 conversaciones antes de activarlo. WhatsApp se puede añadir más adelante (tiene costes propios).</p>
+</div></section>
+
+<section id="como"><div class="w">
+<h2>Cómo trabajamos</h2><p class="sub">Precio cerrado por escrito antes de empezar, en cualquiera de los dos servicios.</p>
+<div class="g">
+<div class="card"><span class="n">1</span><h3>Conversación de 15 min</h3><p>Me cuentas cómo presupuestas y atiendes hoy. Sin compromiso.</p></div>
+<div class="card"><span class="n">2</span><h3>Propuesta cerrada</h3><p>Alcance, precio y plazo por escrito.</p></div>
+<div class="card"><span class="n">3</span><h3>Entrega en pocos días</h3><p>Desde que recibo tu logo y datos. Incluye formación de 30 min.</p></div>
+<div class="card"><span class="n">4</span><h3>Funciona y se mantiene</h3><p>Soporte del primer mes incluido. Mantenimiento mensual.</p></div>
+</div></div></section>
+
+<section id="precio"><div class="w">
+<h2>Precios</h2><p class="sub">Importes sin IVA. Pago 50% al aceptar y 50% a la entrega. Sin permanencia.</p>
+<div class="price">
+<div class="card hl"><h3>Presupuestos con seguimiento</h3><div class="amt">290 €</div><small>piloto para las primeras empresas de la zona</small>
+<ul><li>Registro, PDF, avisos y resumen semanal</li><li>Entrega en 7 días laborables</li><li>Formación de 30 min</li><li>Mantenimiento opcional: 59 €/mes</li></ul></div>
+<div class="card hl"><h3>Asistente virtual de recepción</h3><div class="amt">490 €</div><small>piloto + 99 €/mes</small>
+<ul><li>Chat con tu información y tus límites</li><li>Registro automático en tu libro de presupuestos</li><li>Prueba de 10 conversaciones y ajuste</li><li>El alojamiento del asistente se contrata aparte (te oriento)</li></ul></div>
+</div>
+<p class="sub" style="margin-top:16px">¿Los dos? Lo hablamos y te hago un precio conjunto. No prometo que vayas a vender más: prometo que cada presupuesto y cada solicitud queden registrados y con seguimiento.</p>
+</div></section>
+
+<section id="faq"><div class="w">
+<h2>Preguntas frecuentes</h2>
+<details><summary>¿Tengo que dejar WhatsApp o Excel?</summary><p>No. Sigues trabajando como siempre; las herramientas se añaden encima para registrar y avisar.</p></details>
+<details><summary>¿Se envía algo a mis clientes automáticamente?</summary><p>El seguimiento no: los avisos y borradores llegan solo a ti y tú decides si los envías. El asistente solo conversa con quien le escribe, nunca da precios ni plazos, y avisa de que es una IA.</p></details>
+<details><summary>¿Qué pasa con las conversaciones del asistente?</summary><p>Quedan registradas para que las revises. Solo se guarda lo necesario para tu presupuesto.</p></details>
+<details><summary>¿Dónde están mis datos?</summary><p>En tu cuenta de Google. Firmamos un contrato de encargo de tratamiento de datos y puedes revocar mi acceso cuando quieras.</p></details>
+<details><summary>¿Qué pasa si no me sirve?</summary><p>Si no funciona como se acordó, lo corrijo sin coste. No hay permanencia.</p></details>
+<details><summary>¿Quién está detrás?</summary><p>Alexandre Tro Arribas, programador de Alzira. Estoy empezando y busco mis primeras empresas de referencia en la zona; por eso el precio de los pilotos es reducido.</p></details>
+</div></section>
+
+<section id="contacto"><div class="w contact">
+<h2>¿Hablamos 15 minutos?</h2><p class="sub">Cuéntame cómo llevas hoy tus presupuestos y solicitudes. Si no te encaja, te lo digo.</p>
+<div class="row"><a class="btn" href="https://wa.me/34622785244?text=Hola%20Alexandre,%20quiero%20informaci%C3%B3n%20sobre%20vuestros%20servicios">WhatsApp 622 785 244</a>
+<a class="btn o" href="tel:+34622785244">Llamar</a>
+<a class="btn o" href="mailto:alexandre.raikuro@gmail.com?subject=Informaci%C3%B3n%20sobre%20servicios">alexandre.raikuro@gmail.com</a></div>
+</div></section>
+
+<footer><div class="w">RaiKuro · Ideas / Business / Games · Alzira (Valencia)<br>
+Alexandre Tro Arribas · NIF 54289529F · <a href="aviso-legal.html">Aviso legal y privacidad</a><br>
+Esta web no usa cookies de seguimiento.</div></footer>
 </body></html>
