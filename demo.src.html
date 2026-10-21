@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RaiKuro · Demo Presupuestos con seguimiento</title>
+<link rel="icon" href="data:image/png;base64,__ICON__">
+<style>
+:root{--p:#6A5DFF;--w:#F5F6FF;--b:#0B0B0F;--s:#2A2E3A;--ok:#3ddc97;--warn:#ffb84d;--bad:#ff6b6b;--mut:#9aa0b5}
+*{box-sizing:border-box}
+body{margin:0;background:var(--b);color:var(--w);font:15px/1.5 system-ui,Segoe UI,Roboto,sans-serif}
+header{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--s)}
+header img{width:34px;height:34px;border-radius:6px}
+header h1{font-size:16px;margin:0;letter-spacing:.06em}
+header small{color:var(--mut);display:block;font-size:12px;letter-spacing:.12em}
+main{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
+.banner{background:#14151d;border:1px solid var(--s);border-radius:10px;padding:10px 14px;color:var(--mut);font-size:13px;margin-bottom:16px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:18px}
+.kpi{background:#11121a;border:1px solid var(--s);border-radius:10px;padding:12px 14px}
+.kpi b{display:block;font-size:24px}
+.kpi span{color:var(--mut);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+h2{font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#a49cff;margin:22px 0 8px}
+.wrap{overflow-x:auto;border:1px solid var(--s);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:760px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--s);white-space:nowrap}
+th{background:var(--s);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+tr.rojo td:first-child{box-shadow:inset 3px 0 var(--bad)}
+tr.ambar td:first-child{box-shadow:inset 3px 0 var(--warn)}
+tr.verde td:first-child{box-shadow:inset 3px 0 var(--ok)}
+.chip{padding:2px 9px;border-radius:99px;font-size:12px;background:var(--s)}
+.dias{font-weight:700}.rojo .dias{color:var(--bad)}.ambar .dias{color:var(--warn)}
+button,select,input,textarea{font:inherit;color:var(--w);background:#171923;border:1px solid var(--s);border-radius:8px;padding:6px 10px}
+button{cursor:pointer}button.pri{background:var(--p);border-color:var(--p);font-weight:600}
+button:hover{filter:brightness(1.15)}
+form{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;background:#11121a;border:1px solid var(--s);border-radius:10px;padding:14px}
+form .full{grid-column:1/-1}
+dialog{background:#fff;color:#111;border:0;border-radius:10px;max-width:640px;width:92%;padding:0}
+dialog::backdrop{background:rgba(0,0,0,.7)}
+.sheet{padding:28px}.sheet h3{margin:0 0 4px;color:#3a2fd6}
+.sheet table{min-width:0;color:#111}.sheet td{border-bottom:1px solid #ddd;padding:6px 0}
+.sheet .tot td{font-weight:700;border-top:2px solid #111}
+.bar{display:flex;gap:8px;padding:12px 28px;background:#eee;justify-content:flex-end}
+.bar button{color:#111;background:#fff;border-color:#bbb}.bar button.pri{color:#fff;background:var(--p)}
+pre{white-space:pre-wrap;background:#f4f4f8;color:#111;padding:14px;border-radius:8px;margin:0}
+.nota{color:var(--mut);font-size:12px;margin-top:6px}
+@media print{body *{visibility:hidden}dialog,dialog *{visibility:visible}dialog{position:absolute;left:0;top:0;width:100%;max-width:none}.bar{display:none}}
+</style>
+</head>
+<body>
+<header><img alt="" src="data:image/png;base64,__ICON__"><div><h1>RAIKURO</h1><small>IDEAS / BUSINESS / GAMES</small></div></header>
+<main>
+<div class="banner"><b>Demo con datos ficticios.</b> Así quedaría el libro de presupuestos de su empresa: registro, PDF, avisos de seguimiento y resumen semanal. Pruebe a cambiar un estado, abrir un PDF o crear una solicitud.</div>
+
+<div class="kpis" id="kpis"></div>
+
+<h2>Presupuestos</h2>
+<div class="wrap"><table>
+<thead><tr><th>ID</th><th>Cliente</th><th>Trabajo</th><th>Importe</th><th>Estado</th><th>Enviado</th><th>Días sin respuesta</th><th></th></tr></thead>
+<tbody id="tb"></tbody></table></div>
+<p class="nota">Rojo: 7 o más días · Ámbar: 3 o más días · Verde: ganado. Los avisos y borradores van <b>solo al dueño</b>; nada se envía al cliente sin su aprobación.</p>
+
+<h2>Nueva solicitud (formulario)</h2>
+<form id="f">
+<input name="cliente" placeholder="Nombre del cliente" required>
+<input name="trabajo" placeholder="Trabajo solicitado" required>
+<input name="importe" type="number" min="1" step="1" placeholder="Importe € sin IVA" required>
+<button class="pri">Registrar presupuesto</button>
+</form>
+
+<h2>Resumen semanal (llega por email cada lunes)</h2>
+<div class="wrap"><table><thead><tr><th>Estado</th><th>Nº</th><th>Importe</th></tr></thead><tbody id="res"></tbody></table></div>
+</main>
+
+<dialog id="dlg"><div id="dlgBody"></div><div class="bar"><button id="cp" class="pri">Copiar</button><button id="pr">Imprimir / Guardar PDF</button><button onclick="dlg.close()">Cerrar</button></div></dialog>
+
+<script>
+const ESTADOS=['Solicitado','Enviado','Seguimiento','Ganado','Perdido'];
+const hoy=new Date();hoy.setHours(0,0,0,0);
+const ago=d=>{const x=new Date(hoy);x.setDate(x.getDate()-d);return x};
+let n=5;
+const datos=[
+{id:'P-001',cliente:'Comunidad Los Pinos',trabajo:'Cambio de cuadro eléctrico',importe:1850,estado:'Enviado',envio:ago(9)},
+{id:'P-002',cliente:'Carmen Soler',trabajo:'Reforma de baño',importe:3400,estado:'Enviado',envio:ago(4)},
+{id:'P-003',cliente:'Bar El Rincón',trabajo:'Instalación de aire acondicionado',importe:2150,estado:'Enviado',envio:ago(1)},
+{id:'P-004',cliente:'J. Martínez',trabajo:'Revisión de fontanería',importe:380,estado:'Ganado',envio:ago(12)},
+{id:'P-005',cliente:'Taller Hermanos Gil',trabajo:'Iluminación LED nave',importe:2900,estado:'Solicitado',envio:null},
+];
+const eur=v=>v.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+const fch=d=>d?d.toLocaleDateString('es-ES'):'—';
+const dias=p=>(p.envio&&(p.estado==='Enviado'||p.estado==='Seguimiento'))?Math.floor((hoy-p.envio)/864e5):null;
+function pintar(){
+  datos.forEach(p=>{const d=dias(p);if(d!==null&&d>=3&&p.estado==='Enviado')p.estado='Seguimiento'});
+  tb.innerHTML=datos.map(p=>{const d=dias(p);const c=p.estado==='Ganado'?'verde':d>=7?'rojo':d>=3?'ambar':'';
+    return `<tr class="${c}"><td>${p.id}</td><td>${p.cliente}</td><td>${p.trabajo}</td><td>${eur(p.importe)}</td>
+    <td><select onchange="cambiar('${p.id}',this.value)">${ESTADOS.map(e=>`<option ${e===p.estado?'selected':''}>${e}</option>`).join('')}</select></td>
+    <td>${fch(p.envio)}</td><td class="dias">${d===null?'—':d}</td>
+    <td><button onclick="pdf('${p.id}')">PDF</button> ${d>=3?`<button class="pri" onclick="borrador('${p.id}')">Borrador</button>`:''}</td></tr>`}).join('');
+  const act=datos.filter(p=>['Enviado','Seguimiento'].includes(p.estado));
+  const pend=act.reduce((a,p)=>a+p.importe,0), venc=act.filter(p=>dias(p)>=3).length;
+  kpis.innerHTML=`<div class="kpi"><b>${act.length}</b><span>Pendientes de respuesta</span></div>
+  <div class="kpi"><b>${eur(pend)}</b><span>Importe en el aire</span></div>
+  <div class="kpi"><b>${venc}</b><span>Requieren seguimiento</span></div>
+  <div class="kpi"><b>${eur(datos.filter(p=>p.estado==='Ganado').reduce((a,p)=>a+p.importe,0))}</b><span>Ganado</span></div>`;
+  res.innerHTML=ESTADOS.map(e=>{const l=datos.filter(p=>p.estado===e);return `<tr><td>${e}</td><td>${l.length}</td><td>${eur(l.reduce((a,p)=>a+p.importe,0))}</td></tr>`}).join('');
+}
+function cambiar(id,e){const p=datos.find(x=>x.id===id);p.estado=e;if(e==='Enviado'&&!p.envio)p.envio=new Date(hoy);pintar()}
+function abrir(html,copiar){cp.textContent='Copiar';dlgBody.innerHTML=html;cp.style.display=copiar?'':'none';pr.style.display=copiar?'none':'';dlg.showModal()}
+function pdf(id){const p=datos.find(x=>x.id===id),b=p.importe,iva=b*.21;
+  abrir(`<div class="sheet"><h3>Instalaciones Demo S.L.</h3><div>Presupuesto ${p.id} · ${hoy.toLocaleDateString('es-ES')}</div><br>
+  <div><b>Cliente:</b> ${p.cliente}</div><div><b>Trabajo:</b> ${p.trabajo}</div><br>
+  <table style="width:100%"><tr><td>Base imponible</td><td align="right">${eur(b)}</td></tr><tr><td>IVA 21%</td><td align="right">${eur(iva)}</td></tr><tr class="tot"><td>TOTAL</td><td align="right">${eur(b+iva)}</td></tr></table>
+  <br><small>Validez 15 días. Ejemplo ficticio generado automáticamente desde la plantilla.</small></div>`,false)}
+function borrador(id){const p=datos.find(x=>x.id===id);
+  abrir(`<div class="sheet"><b>Borrador de seguimiento (usted lo revisa y lo envía)</b><br><br><pre id="txt">Hola ${p.cliente}, le escribo por el presupuesto de "${p.trabajo}" que le enviamos hace ${dias(p)} días. ¿Ha podido verlo? Si tiene alguna duda o quiere ajustar algo, lo revisamos sin compromiso. Gracias.</pre></div>`,true)}
+cp.onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText(document.getElementById('txt').textContent);cp.textContent='Copiado'};
+pr.onclick=()=>window.print();
+f.onsubmit=e=>{e.preventDefault();const d=new FormData(f);datos.push({id:'P-00'+(++n),cliente:d.get('cliente'),trabajo:d.get('trabajo'),importe:+d.get('importe'),estado:'Solicitado',envio:null});f.reset();pintar()};
+pintar();
+</script>
+</body></html>
